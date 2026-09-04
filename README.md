@@ -36,7 +36,7 @@ docker run -p 8080:8080 -p 50000:50000 -d \
 * `-v jenkins_home:/var/jenkins_home` — Persists Jenkins data, configuration, plugins, and jobs outside the container.
 * `-v /var/run/docker.sock:/var/run/docker.sock` — Gives Jenkins access to the host's Docker daemon, allowing Jenkins to execute Docker commands.
 
-#### Install Docker inside the Container
+#### Install Docker Inside the Container
 ```bash
 docker exec -u 0 -it <container-id> bash
 ```
