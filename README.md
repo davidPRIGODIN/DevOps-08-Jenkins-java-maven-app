@@ -30,6 +30,34 @@ apt update && apt install docker.io
 ```bash
 docker run -p 8080:8080 -p 50000:50000 -d \
 -v jenkins_home:/var/jenkins_home jenkins/jenkins:lts
+-v /var/run/docker.sock:/var/run/docker.sock jenkins/jenkins:lts
+```
+
+* `-v jenkins_home:/var/jenkins_home` — Persists Jenkins data, configuration, plugins, and jobs outside the container.
+* `-v /var/run/docker.sock:/var/run/docker.sock` — Gives Jenkins access to the host's Docker daemon, allowing Jenkins to execute Docker commands.
+
+#### Install Docker inside the Container
+```bash
+docker exec -u 0 -it <container-id> bash
+```
+```bash
+curl https://get.docker.com/ > dockerinstall && chmod 777 dockerinstall && ./dockerinstall
+```
+
+#### Add Permissions for the Jenkins User
+```bash
+chmod 666 /var/run/docker.sock
+```
+Do this every time you start the container.
+
+#### Login as Jenkins User
+```bash
+exit && docker exec -it <container-id> bash
+```
+
+#### Verify Docker Commands Can Run Inside the Container
+```bash
+docker pull redis
 ```
 
 ### Jenkins UI
