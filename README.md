@@ -1,9 +1,6 @@
 # DevOps-08-Jenkins-java-maven-app
 
-
-This project demonstrates how to create and configure Jenkins Freestyle Jobs.
-
-Freestyle Jobs are used for very simple workflows.
+This project explores Jenkins for automating CI/CD workflows. It covers Freestyle Jobs, Git integration, automated testing and building of a Java application, and Pipeline Jobs.
 
 ## 1. Install Jenkins
 
@@ -118,39 +115,42 @@ docker start <container-id>
 * Verify that the plugin is installed under **Plugins → Installed plugins**.
 <br>
 
-## 2. Create simple Freestyle Job & Plugin Configuration
+## 2. Freestyle Job
 
-### Create Freestyle Job
+Freestyle Jobs are suitable for simple workflows.
+
+### 2.1. Create a Simple Freestyle Job & Plugin Configuration
+
+#### Create Freestyle Job
 * New Item → Freestyle project
-* Create a Job → Freestyle project
 * Enter the job name: `my-job`
 
-### Write npm commands
+#### Write npm commands
 * my-job → Configure → Build Steps → Add build step → Execute script shell
 ```bash
 npm --version
 ```
 
-### Write mvn commands
+#### Write mvn commands
 * my-job → Configure → Build Steps → Add build step → Invoke top-level Maven targets
 * Maven version: Select the installed Maven version.
 * Goals: `--version` (`mvn --version`).
 * Save
 
-### Build the project and check that there are no errors
+#### Build the project and check that there are no errors
 * my-job → Build Now
 * my-job → Builds → Down Arrow → Console Output: Finished: SUCCESS
 <br>
 
-## 3. Configure Git Repository
+### 2.2. Configure Git Repository
 
 Connect Jenkins Job to your Git repository.
 
-### Set Git URL Repository
+#### Set Git URL Repository
 * my-job → Configure → Source Code Management → Git
 * Repository URL : https://github.com/davidPRIGODIN/DevOps-08-Jenkins-java-maven-app.git
 
-### Allow your Jenkins Server to connect to your Git Repository
+#### Allow your Jenkins Server to connect to your Git Repository
 * Credentials → Add → Global credentials
 * Kind : Username with password
 * Enter your Username and Password from GitLab or GitHub.
@@ -159,23 +159,23 @@ Connect Jenkins Job to your Git repository.
 * Select the credentials you created.
 * Save
 
-### Build the project and check that there are no errors
+#### Build the project and check that there are no errors
 * my-job → Build Now
 * my-job → Builds → Down Arrow → Console Output: Finished: SUCCESS
 <br>
 
-## 4. Complete Task from Git Repo in Jenkins Job
+### 2.3. Complete Task from Git Repo in Jenkins Job
 
 Run code from Git repository.
 
-### Select the Branch with the code to be executed
+#### Select the Branch with the code to be executed
 * my-job → Configure → Source Code Management
 * Branches to build →  Branch Specifier: */jenkins-jobs
 
-### Remove previous command
+#### Remove previous command
 * Build Steps →  Execute shell →  Command: `npm --version`
 
-### Run Bash file instead
+#### Run Bash file instead
 ```bash
 chmod +x freestyle-build.sh
 ```
@@ -184,12 +184,12 @@ chmod +x freestyle-build.sh
 ```
 * Save
 
-### Build the project and check that there are no errors
+#### Build the project and check that there are no errors
 * my-job → Build Now
 * my-job → Builds → Down Arrow → Console Output: Finished: SUCCESS
 <br>
 
-## 5. Run tests and build Java Application
+### 2.4. Run Tests and Build Java Application
 
 We are gonna take a Java Maven application.
 
@@ -211,10 +211,33 @@ And then we are gonna build a Jar file of that application.
 * Goals: `package`
 * Save
 
-### Build the project and check that there are no errors
+#### Build the project and check that there are no errors
 * java-maven-build → Build Now
 * java-maven-build → Builds → Down Arrow → Console Output: Finished: SUCCESS
 <br>
+
+## 3. Pipeline Job
+
+Pipeline Jobs are well suited for CI/CD workflows.
+
+### 3.1. Create a Pipeline Job
+* New Item → Pipeline
+* Enter the job name: `my-pipeline`
+
+#### Connect this Pipeline to GitHub Repository
+* Configure → Pipeline → Definition → Pipeline script from SCM (Source Code Management)
+* SCM: Git
+* Repository URL: https://github.com/davidPRIGODIN/DevOps-08-Jenkins-java-maven-app.git
+* Credentials: My GitHub credentials.
+* Branch Specifier: */main
+* Script Path: Jenkinsfile (Contains the Groovy script that configure the pipeline)
+* Save
+
+#### Build the project and check that there are no errors
+* my-job → Build Now
+* my-job → Builds → Down Arrow → Console Output: Finished: SUCCESS
+<br>
+
 
 ## Acknowledgements
 
