@@ -234,8 +234,8 @@ Pipeline Jobs are well suited for CI/CD workflows.
 * Save
 
 #### Build the project and check that there are no errors
-* my-job → Build Now
-* my-job → Builds → Down Arrow → Console Output: Finished: SUCCESS
+* my-pipeline → Build Now
+* my-pipeline → Builds → Down Arrow → Console Output: Finished: SUCCESS
 <br>
 
 
